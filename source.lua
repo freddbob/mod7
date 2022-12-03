@@ -1265,10 +1265,17 @@ Tools:CreateButton({
             elseif ins.Name=="Shade" and ins.Parent==workspace.CurrentCamera and ins:GetAttribute("ClonedByCrucifix")==nil then
                 task.spawn(function()
                     repeat task.wait() until IsVisible(ins) and (Root.Position-ins.Position).Magnitude <= 12.5 and Equipped
-                    ins.Anchored=true
+                    local clone = ins:Clone()
+                    clone:SetAttribute("ClonedByCrucifix", true)
+                    clone.CFrame = ins.CFrame
+                    clone.Parent = ins.Parent
+                    clone.Anchored = true
+                    ins:Remove()
+
                     dupeCrucifix:Fire(13, ins)
-                    ModuleScripts.MainGame.camShaker:ShakeOnce(10, 10, 5, 0.15)
-                    for _, thing in pairs(ins:GetDescendants()) do
+                    ModuleScripts.MainGame.camShaker:ShakeOnce(40, 10, 5, 0.15)
+        
+                    for _, thing in pairs(clone:GetDescendants()) do
                         if thing:IsA("SpotLight") then
                             game:GetService("TweenService"):Create(thing, TweenInfo.new(5), {
                                 Brightness=thing.Brightness*5
@@ -1279,14 +1286,33 @@ Tools:CreateButton({
                             }):Play()
                         elseif thing:IsA("TouchTransmitter") then thing:Destroy() end
                     end
+        
+                    for _, pc in pairs(clone:GetDescendants()) do
+                        if pc:IsA("ParticleEmitter") then
+                            pc.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 0, 4)), ColorSequenceKeypoint.new(0.48, Color3.fromRGB(182, 0, 3)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(255, 0, 4))}
+                        end
+                    end
+        
+                    local Original_color = {}
+        
+                    local light
+                    light = game.Lighting["Ambience_Shade"]
+                    game:GetService("TweenService"):Create(light, TweenInfo.new(1), {
+        
+                    }):Play()
+        
                     wait(5)
-                    ins.Burst.PlaybackSpeed=0.5
-                    ins.Burst:Stop()
-                    ins.Burst:Play()
-                    game:GetService("TweenService"):Create(ins, TweenInfo.new(6), {
-                        CFrame=CFrame.new(ins.CFrame.X, ins.CFrame.Y-12, ins.CFrame.Z)
+        
+                    clone.Burst.PlaybackSpeed=0.5
+                    clone.Burst:Stop()
+                    clone.Burst:Play()
+                    light.TintColor = Color3.fromRGB(215,253,255)
+                    game:GetService("TweenService"):Create(clone, TweenInfo.new(6), {
+                        CFrame=CFrame.new(clone.CFrame.X, clone.CFrame.Y-12, clone.CFrame.Z)
                     }):Play()
                     wait(8.2)
+        
+                    game:GetService("Debris"):AddItem(clone, 0)
                     game.ReplicatedStorage.Bricks.ShadeResult:FireServer()
                 end)
             end
