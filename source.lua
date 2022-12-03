@@ -1500,6 +1500,8 @@ Tools:CreateButton({
 })
 Tools:CreateKeybind({
     Name="Keybind Selected Tool",
+    CurrentKeybind = "T",
+	HoldToInteract = false,
     Callback=function() toolFuncs[selectedTool.CurrentOption]() end
 })
 --#endregion
