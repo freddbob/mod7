@@ -947,7 +947,6 @@ Tools:CreateButton({
             while task.wait() do
                 if InTrans then
                     wait()
-                    print'in trans'
                     hum.WalkSpeed = Durability
                 else
                     hum.WalkSpeed = 16
@@ -1829,14 +1828,12 @@ old=hookmetamethod(game, "__namecall", newcclosure(function(self, ...)
     local args={...}
     if getnamecallmethod()=="FireServer" and self.Name=="Screech" then
         if game.Players.LocalPlayer.Character:FindFirstChild"Crucifix" then
-            workspace.CurrentCamera:FindFirstChild("Screech").Animations.Attack.AnimationId="rbxassetid://10493727264"
-            local con
+            local screech=workspace.CurrentCamera:FindFirstChild("Screech")
+            screech:FindFirstChildWhichIsA("AnimationController"):LoadAnimation(screech.Animations.Caught)
+            screech.Animations.Attack.AnimationId="rbxassetid://10493727264"
             local snd=game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules.Screech.Attack
-            con=snd.Played:Connect(function()
-                snd:Stop()
-                snd.Parent.Caught:Play()
-                con:Disconnect()
-            end)
+            snd:Stop()
+            snd.Parent.Caught:Play()
             return old(self, false)
         end
         if args[1]==false and CanEntityKill then
