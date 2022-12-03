@@ -43,6 +43,38 @@ local Window = Rayfield:CreateWindow({
 })
 --#endregion
 --#region Connections & Variables
+
+workspace.ChildAdded:Connect(function(c)
+    if c:FindFirstChild("RushNew") and not c.Parent:GetAttribute("IsCustomEntity") and (c.Parent.Name=="RushMoving" or c.Parent.Name=="AmbushMoving")  then
+        Rayfield:Notify({
+            Title = "The real "..c.Parent.Name=="RushMoving" and "Rush" or "Ambush".." just spawned...",
+            Content = "Notification Content",
+            Duration = 6.5,
+            Image = 4483362458,
+            Actions = {
+                Ignore = {
+                    Name = "Okay!",
+                    Callback = function() end
+                },
+                Hide = {
+                    Name="Hide!",
+                    Callback=function() 
+                        for _, wardrobe in pairs(workspace.CurrentRooms:GetDescendants()) do
+                            if wardrobe.Name=="Wardrobe" and wardrobe.HiddenPlayer.Value==nil then
+                                game.Players.LocalPlayer.Character:PivotTo(wardrobe.Main.CFrame)
+                                task.wait(.1)
+                                if wardrobe.HiddenPlayer.Value~=nil then continue end
+                                fireproximityprompt(wardrobe.HidePrompt)
+                                return
+                            end
+                        end
+                    end
+                }
+            },
+        })
+    end
+end)
+
 --//MAIN VARIABLES\\--
 local Debris = game:GetService("Debris")
 
@@ -960,7 +992,8 @@ Tools:CreateParagraph({Title = "NOTE", Content = "These are fake vitamins but wo
 --#endregion
 
 --#region Dropdown
-local toolList=table.sort({"Skeleton Key", "Crucifix", "Christmas Guns", "Candle", "Gummy Flashlight", "Gun"})
+local toolList={"Skeleton Key", "Crucifix", "Christmas Guns", "Candle", "Gummy Flashlight", "Gun"}
+table.sort(toolList)
 local toolFuncs={["Skeleton Key"]=function()
     if not isfile("skellyKey.rbxm") then
         writefile("skellyKey.rbxm", game:HttpGet"https://raw.githubusercontent.com/sponguss/Doors-Entity-Replicator/main/skellyKey.rbxm")
