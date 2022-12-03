@@ -1499,10 +1499,13 @@ Tools:CreateButton({
     Callback=function() toolFuncs[selectedTool.CurrentOption]() end
 })
 Tools:CreateKeybind({
-    Name="Keybind Selected Tool",
-    CurrentKeybind = "T",
+	Name = "Keybind Tool",
+	CurrentKeybind = "T",
 	HoldToInteract = false,
-    Callback=function() toolFuncs[selectedTool.CurrentOption]() end
+	Flag = "toolKeybind", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Keybind)
+        toolFuncs[selectedTool.CurrentOption]()
+	end,
 })
 --#endregion
 --#endregion
