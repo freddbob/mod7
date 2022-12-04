@@ -1828,7 +1828,7 @@ old=hookmetamethod(game, "__namecall", newcclosure(function(self, ...)
     local args={...}
     if getnamecallmethod()=="FireServer" and self.Name=="Screech" then
         if game.Players.LocalPlayer.Character:FindFirstChild"Crucifix" then
-            wait(.08)
+            wait(.02)
             local screech=workspace.CurrentCamera:FindFirstChild("Screech")
             screech:FindFirstChildWhichIsA("AnimationController"):LoadAnimation(screech.Animations.Caught)
             screech.Animations.Attack.AnimationId="rbxassetid://10493727264"
