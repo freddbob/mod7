@@ -1649,7 +1649,7 @@ end, ["Gun"]=function()
     if not isfile("Hole.rbxm") then
         writefile("Hole.rbxm", game:HttpGet"https://cdn.discordapp.com/attachments/969056040094138378/1044313717107593277/Hole.rbxm")
     end
-    loadstring(game:HttpGet"https://raw.githubusercontent.com/ZepsyyCodesLUA/Utilities/main/DOORSFpsGun.lua?token=GHSAT0AAAAAAB2POHILOXMAHBQ2GN2QD2MQY3SXTCQ")()
+    loadstring(game:HttpGet"hhttps://raw.githubusercontent.com/ZepsyyCodesLUA/Utilities/main/Doors/Pistol.lua")()
 end}
 local selectedTool=Tools:CreateDropdown({
     Name="Select Tool",
