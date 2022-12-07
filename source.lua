@@ -1238,7 +1238,7 @@ end, ["Crucifix"]=function()
                         local thing=loadstring(game:HttpGet"https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Door%20Replication/Source.lua")()
                         local newdoor=thing.CreateDoor({CustomKeyNames={"SkellyKey"}, Sign=true, Light=true})
                         newdoor.Model.Parent=workspace
-                        newdoor.Model:PivotTo(room.Door.Door.CFrame)
+                        newdoor.Model:PivotTo(room:WaitForChild"Door":WaitForChild"Door".CFrame)
                         newdoor.Model.Parent=room
                         room.Door:Destroy()
                         thing.ReplicateDoor({Model=newdoor.Model, Config={}, Debug={OnDoorPreOpened=function() end}})
