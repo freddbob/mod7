@@ -17,7 +17,7 @@ if not isfile("interactedWithDiscordPrompt.txt") then
     local Inviter = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Discord%20Inviter/Source.lua"))()
     Inviter.Prompt({
         name = "Zepsyy's Server",
-        invite = "https://discord.gg/zepsyy",
+        invite = "https://discord.gg/scripters",
     })
 end
 --#endregion
