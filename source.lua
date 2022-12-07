@@ -1004,20 +1004,20 @@ local toolFuncs={["Skeleton Key"]=function()
         local thing=loadstring(game:HttpGet"https://raw.githubusercontent.com/sponguss/Doors-Entity-Replicator/main/skellyKeyRoomRep.lua")()
         local newdoor=thing.CreateDoor({CustomKeyNames={"SkellyKey"}, Sign=true, Light=true, Locked=true})
         newdoor.Model.Parent=workspace
-        newdoor.Model:PivotTo(room.Door.Door.CFrame)
+        newdoor.Model:PivotTo(room:WaitForChild"Door".Door.CFrame)
         newdoor.Model.Parent=room
-        room.Door:Destroy()
+        room:WaitForChild"Door":Destroy()
         thing.ReplicateDoor({Model=newdoor.Model, Config={CustomKeyNames={"SkellyKey"}}, Debug={OnDoorPreOpened=function() end}})
     end
     keyTool.Equipped:Connect(function()
         for _, room in pairs(workspace.CurrentRooms:GetChildren()) do
-            if room.Door:FindFirstChild"Lock" and not room:GetAttribute("Replaced") then
+            if room:WaitForChild"Door":FindFirstChild"Lock" and not room:GetAttribute("Replaced") then
                 room:SetAttribute("Replaced", true)
                 setupRoom(room)
             end
         end
         con=workspace.CurrentRooms.ChildAdded:Connect(function(room)
-            if room.Door:FindFirstChild"Lock" and not room:GetAttribute("Replaced") then
+            if room:WaitForChild"Door":FindFirstChild"Lock" and not room:GetAttribute("Replaced") then
                 room:SetAttribute("Replaced", true)
                 setupRoom(room)
             end
@@ -1219,11 +1219,11 @@ end, ["Crucifix"]=function()
                             repeat task.wait() until workspace.CurrentRooms:FindFirstChild(tostring(val.Value))
                             local room=workspace.CurrentRooms[tostring(val.Value-1)]
                             local thing=loadstring(game:HttpGet"https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Door%20Replication/Source.lua")()
-                            local newdoor=thing.CreateDoor({CustomKeyNames={"SkellyKey"}, Sign=true, Light=true, Locked=(room.Door:FindFirstChild"Lock" and true or false)})
+                            local newdoor=thing.CreateDoor({CustomKeyNames={"SkellyKey"}, Sign=true, Light=true, Locked=(room:WaitForChild"Door":FindFirstChild"Lock" and true or false)})
                             newdoor.Model.Parent=workspace
-                            newdoor.Model:PivotTo(room.Door.Door.CFrame)
+                            newdoor.Model:PivotTo(room:WaitForChild"Door".Door.CFrame)
                             newdoor.Model.Parent=room
-                            room.Door:Destroy()
+                            room:WaitForChild"Door":Destroy()
                             thing.ReplicateDoor({Model=newdoor.Model, Config={}, Debug={OnDoorPreOpened=function() end}})
                             local currRoom=game.Players.LocalPlayer:GetAttribute("CurrentRoom")
                             repeat task.wait() until game.Players.LocalPlayer:GetAttribute"CurrentRoom"~=currRoom
@@ -1240,7 +1240,7 @@ end, ["Crucifix"]=function()
                         newdoor.Model.Parent=workspace
                         newdoor.Model:PivotTo(room:WaitForChild"Door":WaitForChild"Door".CFrame)
                         newdoor.Model.Parent=room
-                        room.Door:Destroy()
+                        room:WaitForChild"Door":Destroy()
                         thing.ReplicateDoor({Model=newdoor.Model, Config={}, Debug={OnDoorPreOpened=function() end}})
                         local currRoom=game.Players.LocalPlayer:GetAttribute("CurrentRoom")
                         repeat task.wait() until game.Players.LocalPlayer:GetAttribute"CurrentRoom"~=currRoom
@@ -1773,11 +1773,11 @@ global:CreateToggle({
                         repeat task.wait() until workspace.CurrentRooms:FindFirstChild(tostring(val.Value))
                         local room=workspace.CurrentRooms[tostring(val.Value-1)]
                         local thing=loadstring(game:HttpGet"https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Door%20Replication/Source.lua")()
-                        local newdoor=thing.CreateDoor({CustomKeyNames={"SkellyKey"}, Sign=true, Light=true, Locked=(room.Door:FindFirstChild"Lock" and true or false)})
+                        local newdoor=thing.CreateDoor({CustomKeyNames={"SkellyKey"}, Sign=true, Light=true, Locked=(room:WaitForChild"Door":FindFirstChild"Lock" and true or false)})
                         newdoor.Model.Parent=workspace
-                        newdoor.Model:PivotTo(room.Door.Door.CFrame)
+                        newdoor.Model:PivotTo(room:WaitForChild("Door").Door.CFrame)
                         newdoor.Model.Parent=room
-                        room.Door:Destroy()
+                        room:WaitForChild("Door"):Destroy()
                         thing.ReplicateDoor({Model=newdoor.Model, Config={}, Debug={OnDoorPreOpened=function() end}})
                         return
                     else
@@ -1822,9 +1822,9 @@ global:CreateToggle({
                 local thing=loadstring(game:HttpGet"https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Door%20Replication/Source.lua")()
                 local newdoor=thing.CreateDoor({CustomKeyNames={"SkellyKey"}, Sign=true, Light=true})
                 newdoor.Model.Parent=workspace
-                newdoor.Model:PivotTo(room.Door.Door.CFrame)
+                newdoor.Model:PivotTo(room:WaitForChild("Door").Door.CFrame)
                 newdoor.Model.Parent=room
-                room.Door:Destroy()
+                room:WaitForChild("Door"):Destroy()
                 thing.ReplicateDoor({Model=newdoor.Model, Config={}, Debug={OnDoorPreOpened=function() end}})
             else
                 repeat task.wait() until workspace.CurrentRooms:FindFirstChild(tostring(savedVal)) and workspace.CurrentRooms:FindFirstChild(tostring(savedVal-2)).Door.Light.Attachment.PointLight.Enabled==true
