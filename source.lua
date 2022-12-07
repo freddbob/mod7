@@ -1265,7 +1265,6 @@ end, ["Crucifix"]=function()
         end)
     
         tool.Unequipped:Connect(function()
-            rushRemoverConnection:Disconnect()
             Equipped = false
             Char:SetAttribute("Hiding", nil)
             RightArm.Name = "RightUpperArm"
