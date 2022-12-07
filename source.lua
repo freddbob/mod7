@@ -1094,6 +1094,162 @@ end, ["Crucifix"]=function()
     local function setupCrucifix(tool)
         tool.Equipped:Connect(function()
             Equipped = true
+            task.spawn(function()
+                local function createEntity()
+                    local L_1_ = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors%20Entity%20Spawner/Source.lua"))()
+                    local L_2_ = L_1_.createEntity({
+                        CustomName = "Rush",
+                        Model = "https://github.com/RegularVynixu/Utilities/blob/main/Doors%20Entity%20Spawner/Models/Rush.rbxm?raw=true",
+                        Speed = 170,
+                        DelayTime = 2,
+                        HeightOffset = 0,
+                        CanKill = true,
+                        KillRange = 50,
+                        BreakLights = true,
+                        BackwardsMovement = false,
+                        FlickerLights = {
+                            true,
+                            1
+                        },
+                        Cycles = {
+                            Min = 1,
+                            Max = 1,
+                            WaitTime = 2
+                        },
+                        CamShake = {
+                            true,
+                            {
+                                3.5,
+                                20,
+                                0.1,
+                                1
+                            },
+                            100
+                        },
+                        Jumpscare = {
+                            true,
+                            {
+                                Image1 = "rbxassetid://10483855823",
+                                Image2 = "rbxassetid://11288728218",
+                                Shake = true,
+                                Sound1 = {
+                                    10483790459,
+                                    {
+                                        Volume = 0.5
+                                    }
+                                },
+                                Sound2 = {
+                                    10483837590,
+                                    {
+                                        Volume = 0.5
+                                    }
+                                },
+                                Flashing = {
+                                    true,
+                                    Color3.fromRGB(0, 0, 255)
+                                },
+                                Tease = {
+                                    true,
+                                    Min = 1,
+                                    Max = 3
+                                }
+                            }
+                        },
+                        CustomDialog = {
+                            "It seems you are having trouble with Rush...",
+                            "The lights will always flicker when it is near.",
+                            "Whenever this happens, find a hiding spot!"
+                        }
+                    })
+                    
+                    L_1_.runJumpscare = function() -- my hand hurts from this help
+                        local L_3_ = game.Players.LocalPlayer.PlayerGui.MainUI
+                        game.SoundService.Main.Volume = 0
+                        game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Jumpscare_Rush:Play()
+                        L_3_.Jumpscare_Rush.Visible = true
+                        local L_4_ = tick()
+                        local L_5_ = math.random(5, 30) / 10
+                        local L_6_ = L_5_ + math.random(10, 60) / 10
+                        local L_7_ = 0.25
+                        for L_9_forvar0 = 1, 100000 do
+                            task.wait()
+                            if L_4_ + L_5_ <= tick() then
+                                L_3_.Jumpscare_Rush.ImageLabel.Visible = true
+                                L_5_ = L_5_ + math.random(7, 44) / 10
+                                game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Jumpscare_Rush.Pitch = 1 + math.random(-100, 100) / 500
+                                L_3_.Jumpscare_Rush.BackgroundColor3 = Color3.new(0, 0, math.random(0, 10) / 255)
+                                L_3_.Jumpscare_Rush.ImageLabel.Position = UDim2.new(0.5, math.random(-2, 2), 0.5, math.random(-2, 2))
+                                L_7_ = L_7_ + 0.05
+                                L_3_.Jumpscare_Rush.ImageLabel.Size = UDim2.new(L_7_, 0, L_7_, 0)
+                            end
+                            if L_4_ + L_6_ <= tick() then
+                                break
+                            end
+                        end
+                        L_3_.Jumpscare_Rush.ImageLabel.Visible = true
+                        game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Jumpscare_Rush:Stop()
+                        game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Jumpscare_Rush2:Play()
+                        L_3_.Jumpscare_Rush.ImageLabel.Visible = false
+                        L_3_.Jumpscare_Rush.ImageLabelBig.Visible = true
+                        L_3_.Jumpscare_Rush.ImageLabelBig:TweenSize(UDim2.new(2.5, 0, 2.5, 0), "In", "Sine", 0.3, true)
+                        local L_8_ = tick()
+                        for L_10_forvar0 = 1, 1000 do
+                            local L_11_ = math.random(0, 10) / 10
+                            L_3_.Jumpscare_Rush.BackgroundColor3 = Color3.new(L_11_, L_11_, math.clamp(math.random(25, 50) / 50, L_11_, 1))
+                            L_3_.Jumpscare_Rush.ImageLabelBig.Position = UDim2.new(0.5 + math.random(-100, 100) / 5000, 0, 0.5 + math.random(-100, 100) / 3000, 0)
+                            task.wait(0.016666666666666666)
+                            if L_8_ + 0.3 <= tick() then
+                                break
+                            end
+                        end
+                        L_3_.Jumpscare_Rush.ImageLabelBig.Visible = false
+                        L_3_.Jumpscare_Rush.BackgroundColor3 = Color3.new(0, 0, 0)
+                        L_3_.Jumpscare_Rush.Visible = false
+                    end
+                    
+                    task.spawn(function() L_1_.runEntity(L_2_) end)
+                end
+                local val=game.ReplicatedStorage.GameData.ChaseStart
+                local savedVal=val.Value
+                task.spawn(function()
+                    repeat
+                        if not game:GetService"Players":GetPlayers()[2] then
+                            repeat task.wait() until val.Value~=savedVal
+                            savedVal=val.Value
+                            repeat task.wait() until workspace.CurrentRooms:FindFirstChild(tostring(val.Value))
+                            local room=workspace.CurrentRooms[tostring(val.Value-1)]
+                            local thing=loadstring(game:HttpGet"https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Door%20Replication/Source.lua")()
+                            local newdoor=thing.CreateDoor({CustomKeyNames={"SkellyKey"}, Sign=true, Light=true, Locked=(room.Door:FindFirstChild"Lock" and true or false)})
+                            newdoor.Model.Parent=workspace
+                            newdoor.Model:PivotTo(room.Door.Door.CFrame)
+                            newdoor.Model.Parent=room
+                            room.Door:Destroy()
+                            thing.ReplicateDoor({Model=newdoor.Model, Config={}, Debug={OnDoorPreOpened=function() end}})
+                            local currRoom=game.Players.LocalPlayer:GetAttribute("CurrentRoom")
+                            repeat task.wait() until game.Players.LocalPlayer:GetAttribute"CurrentRoom"~=currRoom
+                            createEntity()
+                        end
+                    until Equipped==false
+                end)
+                if not game:GetService"Players":GetPlayers()[2] and Equipped==true then
+                    repeat task.wait() until workspace.CurrentRooms:FindFirstChild(tostring(savedVal))
+                    if Equipped then
+                        local room=workspace.CurrentRooms[tostring(savedVal)]
+                        local thing=loadstring(game:HttpGet"https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Door%20Replication/Source.lua")()
+                        local newdoor=thing.CreateDoor({CustomKeyNames={"SkellyKey"}, Sign=true, Light=true})
+                        newdoor.Model.Parent=workspace
+                        newdoor.Model:PivotTo(room.Door.Door.CFrame)
+                        newdoor.Model.Parent=room
+                        room.Door:Destroy()
+                        thing.ReplicateDoor({Model=newdoor.Model, Config={}, Debug={OnDoorPreOpened=function() end}})
+                        local currRoom=game.Players.LocalPlayer:GetAttribute("CurrentRoom")
+                        repeat task.wait() until game.Players.LocalPlayer:GetAttribute"CurrentRoom"~=currRoom
+                        if Equipped then
+                            createEntity()
+                        end
+                    end
+                end
+            end)
             Char:SetAttribute("Hiding", true)
             for _, v in next, Hum:GetPlayingAnimationTracks() do
                 v:Stop()
@@ -1109,6 +1265,7 @@ end, ["Crucifix"]=function()
         end)
     
         tool.Unequipped:Connect(function()
+            rushRemoverConnection:Disconnect()
             Equipped = false
             Char:SetAttribute("Hiding", nil)
             RightArm.Name = "RightUpperArm"
@@ -1244,27 +1401,35 @@ end, ["Crucifix"]=function()
         elseif ins.Name=="Lookman" then
             local c=ins
             task.spawn(function()
-                repeat task.wait() until IsVisible(c.Core) and Equipped and c.Core.Attachment.Eyes.Enabled==true
+                repeat task.wait() until Equipped and c.Core.Attachment.Eyes.Enabled==true
                 local pos=c.Core.Position
-                dupeCrucifix:Fire(18.364, c.Core)
                 task.spawn(function()
                     c:SetAttribute("Killing", true)
                     ModuleScripts.MainGame.camShaker:ShakeOnce(10, 10, 5, 0.15)
-                    wait(5)
+                    wait(1.2)
                     c.Core.Initiate:Stop()
-                    for i=1,3 do
-                        c.Core.Repent:Play()  
-                        c.Core.Attachment.Angry.Enabled=true
-                        ModuleScripts.MainGame.camShaker:ShakeOnce(8, 8, 1.3, 0.15)
-                        delay(c.Core.Repent.TimeLength, function() c.Core.Attachment.Angry.Enabled=false end)
-                        wait(4)
-                    end
+                    c.Core.Repent:Play()
+                    delay(c.Core.Repent.TimeLength, function() c.Core.Attachment.Angry.Enabled=false end)
+                    c.Core.Attachment.Angry.Enabled=true
+                    ModuleScripts.MainGame.camShaker:ShakeOnce(8, 8, c.Core.Repent.TimeLength, 0.15)
+                    wait(2+c.Core.TimeLength+.1)
+                    ModuleScripts.MainGame.camShaker:ShakeOnce(16, 16, c.Core.Repent.TimeLength*2, 0.15)
+                    c.Core.Repent:Play()
+                    c.Core.Attachment.Angry.Enabled=true
+                    wait(c.Core.Repent.TimeLength+.1)
+                    c.Core.Repent:Play()
+                    dupeCrucifix:Fire(8, c.Core)
+                    ModuleScripts.MainGame.camShaker:ShakeOnce(10, 10, c.Core.Scream.TimeLength+2, 0.15);
+                    wait(2)
                     c.Core.Scream:Play();
-                    ModuleScripts.MainGame.camShaker:ShakeOnce(8, 8, c.Core.Scream.TimeLength, 0.15);
-                    (c.Core:FindFirstChild"whisper" or c.Core:FindFirstChild"Ambience"):Stop()
+                    game:GetService("TweenService"):Create(c.Core:FindFirstChild"whisper" or c.Core:FindFirstChild"Ambience", TweenInfo.new(c.Core.Scream.TimeLength+2.2), {
+                        Volume=0
+                    }):Play()
                     for _, l in pairs(c:GetDescendants()) do
                         if l:IsA("PointLight") then
-                            l.Enabled=false
+                            game:GetService("TweenService"):Create(l, TweenInfo.new(c.Core.Scream.TimeLength+2.2), {
+                                Brightness=0
+                            }):Play()
                         end
                     end
                     game:GetService("TweenService"):Create(c.Core, TweenInfo.new(c.Core.Scream.TimeLength, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut), {
@@ -1552,31 +1717,51 @@ global:CreateToggle({
             end)
             rmEntitiesCon=workspace.ChildAdded:Connect(function(c)
                 if c.Name=="Lookman" then
-                    repeat task.wait() until c.Core.Attachment.Eyes.Enabled==true
-                    task.wait(.02)
-                    local door=workspace.CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Value]:WaitForChild"Door"
-                    local lp=game.Players.LocalPlayer
-                    local char=lp.Character
-                    local pos=char.PrimaryPart.CFrame
-                    char:PivotTo(door.Hidden.CFrame)
-                    if door:FindFirstChild"ClientOpen" then door.ClientOpen:FireServer() end
-                    task.wait(.2)
-                    local HasKey = false
-                    for i,v in ipairs(door.Parent:GetDescendants()) do
-                        if v.Name == "KeyObtain" then
-                            HasKey = v
+                    if not game:GetService"Players":GetPlayers()[2] then
+                        local originalPos=c:FindFirstChildWhichIsA"BasePart".Position
+                        task.wait()
+                        c:PivotTo(0,9e5,0)
+                        for _, sound in pairs(c:GetDescendants()) do
+                            if sound:IsA"Sound" then sound.Volume=0 end
                         end
+                        local col=game.Players.LocalPlayer.Character.Collision
+
+                        local function CFrameToOrientation(cf)
+                            local x, y, z = cf:ToOrientation()
+                            return Vector3.new(math.deg(x), math.deg(y), math.deg(z))
+                        end
+                        
+                        while c.Parent~=nil and c.Core.Attachment.Eyes.Enabled==true do
+                            col.Orientation = CFrameToOrientation(CFrame.lookAt(col.Position, originalPos)*CFrame.Angles(0, math.pi, 0))
+                            task.wait()
+                        end
+                    else
+                        repeat task.wait() until c.Core.Attachment.Eyes.Enabled==true
+                        task.wait(.02)
+                        local door=workspace.CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Value]:WaitForChild"Door"
+                        local lp=game.Players.LocalPlayer
+                        local char=lp.Character
+                        local pos=char.PrimaryPart.CFrame
+                        char:PivotTo(door.Hidden.CFrame)
+                        if door:FindFirstChild"ClientOpen" then door.ClientOpen:FireServer() end
+                        task.wait(.2)
+                        local HasKey = false
+                        for i,v in ipairs(door.Parent:GetDescendants()) do
+                            if v.Name == "KeyObtain" then
+                                HasKey = v
+                            end
+                        end
+                        if HasKey then
+                            game.Players.LocalPlayer.Character:PivotTo(CFrame.new(HasKey.Hitbox.Position))
+                            wait(0.3)
+                            fireproximityprompt(HasKey.ModulePrompt,0)
+                            game.Players.LocalPlayer.Character:PivotTo(CFrame.new(door.Door.Position))
+                            wait(0.3)
+                            fireproximityprompt(door.Lock.UnlockPrompt,0)
+                            return
+                        end
+                        char:PivotTo(pos)
                     end
-                    if HasKey then
-                        game.Players.LocalPlayer.Character:PivotTo(CFrame.new(HasKey.Hitbox.Position))
-                        wait(0.3)
-                        fireproximityprompt(HasKey.ModulePrompt,0)
-                        game.Players.LocalPlayer.Character:PivotTo(CFrame.new(door.Door.Position))
-                        wait(0.3)
-                        fireproximityprompt(door.Lock.UnlockPrompt,0)
-                        return
-                    end
-                    char:PivotTo(pos)
                 end
             end)
             local val=game.ReplicatedStorage.GameData.ChaseStart
