@@ -1236,7 +1236,7 @@ end, ["Crucifix"]=function()
                     if Equipped then
                         local room=workspace.CurrentRooms[tostring(savedVal)]
                         local thing=loadstring(game:HttpGet"https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Door%20Replication/Source.lua")()
-                        local newdoor=thing.CreateDoor({CustomKeyNames={"SkellyKey"}, Sign=true, Light=true})
+                        local newdoor=thing.CreateDoor({CustomKeyNames={"SkellyKey"}, Sign=true, Light=true, Locked=(room:WaitForChild"Door":FindFirstChild"Lock" and true or false)})
                         newdoor.Model.Parent=workspace
                         newdoor.Model:PivotTo(room:WaitForChild"Door":WaitForChild"Door".CFrame)
                         newdoor.Model.Parent=room
