@@ -44,37 +44,6 @@ local Window = Rayfield:CreateWindow({
 --#endregion
 --#region Connections & Variables
 
-workspace.ChildAdded:Connect(function(c)
-    if c:FindFirstChild("RushNew") and not c.Parent:GetAttribute("IsCustomEntity") and (c.Parent.Name=="RushMoving" or c.Parent.Name=="AmbushMoving")  then
-        Rayfield:Notify({
-            Title = "The real "..c.Parent.Name=="RushMoving" and "Rush" or "Ambush".." just spawned...",
-            Content = "Notification Content",
-            Duration = 6.5,
-            Image = 4483362458,
-            Actions = {
-                Ignore = {
-                    Name = "Okay!",
-                    Callback = function() end
-                },
-                Hide = {
-                    Name="Hide!",
-                    Callback=function() 
-                        for _, wardrobe in pairs(workspace.CurrentRooms:GetDescendants()) do
-                            if wardrobe.Name=="Wardrobe" and wardrobe.HiddenPlayer.Value==nil then
-                                game.Players.LocalPlayer.Character:PivotTo(wardrobe.Main.CFrame)
-                                task.wait(.1)
-                                if wardrobe.HiddenPlayer.Value~=nil then continue end
-                                fireproximityprompt(wardrobe.HidePrompt)
-                                return
-                            end
-                        end
-                    end
-                }
-            },
-        })
-    end
-end)
-
 --//MAIN VARIABLES\\--
 local Debris = game:GetService("Debris")
 
@@ -106,7 +75,6 @@ local ReSt = game:GetService("ReplicatedStorage")
 local TextService = game:GetService("TextService")
 local TS = game:GetService("TweenService")
 
--- Variables
 
 local Plr = Players.LocalPlayer
 local Char = Plr.Character or Plr.CharacterAdded:Wait()
@@ -119,7 +87,6 @@ local ModuleScripts = {
 }
 local Connections = {}
 
--- Functions
 
 local function playSound(soundId, source, properties)
     local sound = Instance.new("Sound")
@@ -1090,166 +1057,164 @@ end, ["Crucifix"]=function()
     }
     
     -- Functions
+    task.spawn(function()
+        local function createEntity()
+            local L_1_ = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors%20Entity%20Spawner/Source.lua"))()
+            local L_2_ = L_1_.createEntity({
+                CustomName = "Rush",
+                Model = "https://github.com/RegularVynixu/Utilities/blob/main/Doors%20Entity%20Spawner/Models/Rush.rbxm?raw=true",
+                Speed = 170,
+                DelayTime = 2,
+                HeightOffset = 0,
+                CanKill = true,
+                KillRange = 50,
+                BreakLights = true,
+                BackwardsMovement = false,
+                FlickerLights = {
+                    true,
+                    1
+                },
+                Cycles = {
+                    Min = 1,
+                    Max = 1,
+                    WaitTime = 2
+                },
+                CamShake = {
+                    true,
+                    {
+                        3.5,
+                        20,
+                        0.1,
+                        1
+                    },
+                    100
+                },
+                Jumpscare = {
+                    true,
+                    {
+                        Image1 = "rbxassetid://10483855823",
+                        Image2 = "rbxassetid://11288728218",
+                        Shake = true,
+                        Sound1 = {
+                            10483790459,
+                            {
+                                Volume = 0.5
+                            }
+                        },
+                        Sound2 = {
+                            10483837590,
+                            {
+                                Volume = 0.5
+                            }
+                        },
+                        Flashing = {
+                            true,
+                            Color3.fromRGB(0, 0, 255)
+                        },
+                        Tease = {
+                            true,
+                            Min = 1,
+                            Max = 3
+                        }
+                    }
+                },
+                CustomDialog = {
+                    "It seems you are having trouble with Rush...",
+                    "The lights will always flicker when it is near.",
+                    "Whenever this happens, find a hiding spot!"
+                }
+            })
+            
+            L_1_.runJumpscare = function() -- my hand hurts from this help
+                local L_3_ = game.Players.LocalPlayer.PlayerGui.MainUI
+                game.SoundService.Main.Volume = 0
+                game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Jumpscare_Rush:Play()
+                L_3_.Jumpscare_Rush.Visible = true
+                local L_4_ = tick()
+                local L_5_ = math.random(5, 30) / 10
+                local L_6_ = L_5_ + math.random(10, 60) / 10
+                local L_7_ = 0.25
+                for L_9_forvar0 = 1, 100000 do
+                    task.wait()
+                    if L_4_ + L_5_ <= tick() then
+                        L_3_.Jumpscare_Rush.ImageLabel.Visible = true
+                        L_5_ = L_5_ + math.random(7, 44) / 10
+                        game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Jumpscare_Rush.Pitch = 1 + math.random(-100, 100) / 500
+                        L_3_.Jumpscare_Rush.BackgroundColor3 = Color3.new(0, 0, math.random(0, 10) / 255)
+                        L_3_.Jumpscare_Rush.ImageLabel.Position = UDim2.new(0.5, math.random(-2, 2), 0.5, math.random(-2, 2))
+                        L_7_ = L_7_ + 0.05
+                        L_3_.Jumpscare_Rush.ImageLabel.Size = UDim2.new(L_7_, 0, L_7_, 0)
+                    end
+                    if L_4_ + L_6_ <= tick() then
+                        break
+                    end
+                end
+                L_3_.Jumpscare_Rush.ImageLabel.Visible = true
+                game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Jumpscare_Rush:Stop()
+                game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Jumpscare_Rush2:Play()
+                L_3_.Jumpscare_Rush.ImageLabel.Visible = false
+                L_3_.Jumpscare_Rush.ImageLabelBig.Visible = true
+                L_3_.Jumpscare_Rush.ImageLabelBig:TweenSize(UDim2.new(2.5, 0, 2.5, 0), "In", "Sine", 0.3, true)
+                local L_8_ = tick()
+                for L_10_forvar0 = 1, 1000 do
+                    local L_11_ = math.random(0, 10) / 10
+                    L_3_.Jumpscare_Rush.BackgroundColor3 = Color3.new(L_11_, L_11_, math.clamp(math.random(25, 50) / 50, L_11_, 1))
+                    L_3_.Jumpscare_Rush.ImageLabelBig.Position = UDim2.new(0.5 + math.random(-100, 100) / 5000, 0, 0.5 + math.random(-100, 100) / 3000, 0)
+                    task.wait(0.016666666666666666)
+                    if L_8_ + 0.3 <= tick() then
+                        break
+                    end
+                end
+                L_3_.Jumpscare_Rush.ImageLabelBig.Visible = false
+                L_3_.Jumpscare_Rush.BackgroundColor3 = Color3.new(0, 0, 0)
+                L_3_.Jumpscare_Rush.Visible = false
+            end
+            
+            task.spawn(function() L_1_.runEntity(L_2_) end)
+        end
+        local val=game.ReplicatedStorage.GameData.ChaseStart
+        local savedVal=val.Value
+        task.spawn(function()
+            repeat
+                if not game:GetService"Players":GetPlayers()[2] and Equipped then
+                    repeat task.wait() until val.Value~=savedVal
+                    savedVal=val.Value
+                    repeat task.wait() until workspace.CurrentRooms:FindFirstChild(tostring(val.Value))
+                    local room=workspace.CurrentRooms[tostring(val.Value-1)]
+                    local thing=loadstring(game:HttpGet"https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Door%20Replication/Source.lua")()
+                    local newdoor=thing.CreateDoor({CustomKeyNames={"SkellyKey"}, Sign=true, Light=true, Locked=(room:WaitForChild"Door":FindFirstChild"Lock" and true or false)})
+                    newdoor.Model.Parent=workspace
+                    newdoor.Model:PivotTo(room:WaitForChild"Door".Door.CFrame)
+                    newdoor.Model.Parent=room
+                    room:WaitForChild"Door":Destroy()
+                    thing.ReplicateDoor({Model=newdoor.Model, Config={}, Debug={OnDoorPreOpened=function() end}})
+                    local currRoom=game.Players.LocalPlayer:GetAttribute("CurrentRoom")
+                    repeat task.wait() until game.Players.LocalPlayer:GetAttribute"CurrentRoom"~=currRoom
+                    createEntity()
+                end
+            until false==false
+        end)
+        if not game:GetService"Players":GetPlayers()[2] then
+            repeat task.wait() until workspace.CurrentRooms:FindFirstChild(tostring(savedVal))
+            if Equipped then
+                local room=workspace.CurrentRooms[tostring(savedVal)]
+                local thing=loadstring(game:HttpGet"https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Door%20Replication/Source.lua")()
+                local newdoor=thing.CreateDoor({CustomKeyNames={"SkellyKey"}, Sign=true, Light=true, Locked=(room:WaitForChild"Door":FindFirstChild"Lock" and true or false)})
+                newdoor.Model.Parent=workspace
+                newdoor.Model:PivotTo(room:WaitForChild"Door":WaitForChild"Door".CFrame)
+                newdoor.Model.Parent=room
+                room:WaitForChild"Door":Destroy()
+                thing.ReplicateDoor({Model=newdoor.Model, Config={}, Debug={OnDoorPreOpened=function() end}})
+                local currRoom=game.Players.LocalPlayer:GetAttribute("CurrentRoom")
+                repeat task.wait() until game.Players.LocalPlayer:GetAttribute"CurrentRoom"~=currRoom
+                createEntity()
+            end
+        end
+    end)
 
     local function setupCrucifix(tool)
         tool.Equipped:Connect(function()
             Equipped = true
-            task.spawn(function()
-                local function createEntity()
-                    local L_1_ = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors%20Entity%20Spawner/Source.lua"))()
-                    local L_2_ = L_1_.createEntity({
-                        CustomName = "Rush",
-                        Model = "https://github.com/RegularVynixu/Utilities/blob/main/Doors%20Entity%20Spawner/Models/Rush.rbxm?raw=true",
-                        Speed = 170,
-                        DelayTime = 2,
-                        HeightOffset = 0,
-                        CanKill = true,
-                        KillRange = 50,
-                        BreakLights = true,
-                        BackwardsMovement = false,
-                        FlickerLights = {
-                            true,
-                            1
-                        },
-                        Cycles = {
-                            Min = 1,
-                            Max = 1,
-                            WaitTime = 2
-                        },
-                        CamShake = {
-                            true,
-                            {
-                                3.5,
-                                20,
-                                0.1,
-                                1
-                            },
-                            100
-                        },
-                        Jumpscare = {
-                            true,
-                            {
-                                Image1 = "rbxassetid://10483855823",
-                                Image2 = "rbxassetid://11288728218",
-                                Shake = true,
-                                Sound1 = {
-                                    10483790459,
-                                    {
-                                        Volume = 0.5
-                                    }
-                                },
-                                Sound2 = {
-                                    10483837590,
-                                    {
-                                        Volume = 0.5
-                                    }
-                                },
-                                Flashing = {
-                                    true,
-                                    Color3.fromRGB(0, 0, 255)
-                                },
-                                Tease = {
-                                    true,
-                                    Min = 1,
-                                    Max = 3
-                                }
-                            }
-                        },
-                        CustomDialog = {
-                            "It seems you are having trouble with Rush...",
-                            "The lights will always flicker when it is near.",
-                            "Whenever this happens, find a hiding spot!"
-                        }
-                    })
-                    
-                    L_1_.runJumpscare = function() -- my hand hurts from this help
-                        local L_3_ = game.Players.LocalPlayer.PlayerGui.MainUI
-                        game.SoundService.Main.Volume = 0
-                        game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Jumpscare_Rush:Play()
-                        L_3_.Jumpscare_Rush.Visible = true
-                        local L_4_ = tick()
-                        local L_5_ = math.random(5, 30) / 10
-                        local L_6_ = L_5_ + math.random(10, 60) / 10
-                        local L_7_ = 0.25
-                        for L_9_forvar0 = 1, 100000 do
-                            task.wait()
-                            if L_4_ + L_5_ <= tick() then
-                                L_3_.Jumpscare_Rush.ImageLabel.Visible = true
-                                L_5_ = L_5_ + math.random(7, 44) / 10
-                                game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Jumpscare_Rush.Pitch = 1 + math.random(-100, 100) / 500
-                                L_3_.Jumpscare_Rush.BackgroundColor3 = Color3.new(0, 0, math.random(0, 10) / 255)
-                                L_3_.Jumpscare_Rush.ImageLabel.Position = UDim2.new(0.5, math.random(-2, 2), 0.5, math.random(-2, 2))
-                                L_7_ = L_7_ + 0.05
-                                L_3_.Jumpscare_Rush.ImageLabel.Size = UDim2.new(L_7_, 0, L_7_, 0)
-                            end
-                            if L_4_ + L_6_ <= tick() then
-                                break
-                            end
-                        end
-                        L_3_.Jumpscare_Rush.ImageLabel.Visible = true
-                        game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Jumpscare_Rush:Stop()
-                        game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Jumpscare_Rush2:Play()
-                        L_3_.Jumpscare_Rush.ImageLabel.Visible = false
-                        L_3_.Jumpscare_Rush.ImageLabelBig.Visible = true
-                        L_3_.Jumpscare_Rush.ImageLabelBig:TweenSize(UDim2.new(2.5, 0, 2.5, 0), "In", "Sine", 0.3, true)
-                        local L_8_ = tick()
-                        for L_10_forvar0 = 1, 1000 do
-                            local L_11_ = math.random(0, 10) / 10
-                            L_3_.Jumpscare_Rush.BackgroundColor3 = Color3.new(L_11_, L_11_, math.clamp(math.random(25, 50) / 50, L_11_, 1))
-                            L_3_.Jumpscare_Rush.ImageLabelBig.Position = UDim2.new(0.5 + math.random(-100, 100) / 5000, 0, 0.5 + math.random(-100, 100) / 3000, 0)
-                            task.wait(0.016666666666666666)
-                            if L_8_ + 0.3 <= tick() then
-                                break
-                            end
-                        end
-                        L_3_.Jumpscare_Rush.ImageLabelBig.Visible = false
-                        L_3_.Jumpscare_Rush.BackgroundColor3 = Color3.new(0, 0, 0)
-                        L_3_.Jumpscare_Rush.Visible = false
-                    end
-                    
-                    task.spawn(function() L_1_.runEntity(L_2_) end)
-                end
-                local val=game.ReplicatedStorage.GameData.ChaseStart
-                local savedVal=val.Value
-                task.spawn(function()
-                    repeat
-                        if not game:GetService"Players":GetPlayers()[2] then
-                            repeat task.wait() until val.Value~=savedVal
-                            savedVal=val.Value
-                            repeat task.wait() until workspace.CurrentRooms:FindFirstChild(tostring(val.Value))
-                            local room=workspace.CurrentRooms[tostring(val.Value-1)]
-                            local thing=loadstring(game:HttpGet"https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Door%20Replication/Source.lua")()
-                            local newdoor=thing.CreateDoor({CustomKeyNames={"SkellyKey"}, Sign=true, Light=true, Locked=(room:WaitForChild"Door":FindFirstChild"Lock" and true or false)})
-                            newdoor.Model.Parent=workspace
-                            newdoor.Model:PivotTo(room:WaitForChild"Door".Door.CFrame)
-                            newdoor.Model.Parent=room
-                            room:WaitForChild"Door":Destroy()
-                            thing.ReplicateDoor({Model=newdoor.Model, Config={}, Debug={OnDoorPreOpened=function() end}})
-                            local currRoom=game.Players.LocalPlayer:GetAttribute("CurrentRoom")
-                            repeat task.wait() until game.Players.LocalPlayer:GetAttribute"CurrentRoom"~=currRoom
-                            createEntity()
-                        end
-                    until Equipped==false
-                end)
-                if not game:GetService"Players":GetPlayers()[2] and Equipped==true then
-                    repeat task.wait() until workspace.CurrentRooms:FindFirstChild(tostring(savedVal))
-                    if Equipped then
-                        local room=workspace.CurrentRooms[tostring(savedVal)]
-                        local thing=loadstring(game:HttpGet"https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Door%20Replication/Source.lua")()
-                        local newdoor=thing.CreateDoor({CustomKeyNames={"SkellyKey"}, Sign=true, Light=true, Locked=(room:WaitForChild"Door":FindFirstChild"Lock" and true or false)})
-                        newdoor.Model.Parent=workspace
-                        newdoor.Model:PivotTo(room:WaitForChild"Door":WaitForChild"Door".CFrame)
-                        newdoor.Model.Parent=room
-                        room:WaitForChild"Door":Destroy()
-                        thing.ReplicateDoor({Model=newdoor.Model, Config={}, Debug={OnDoorPreOpened=function() end}})
-                        local currRoom=game.Players.LocalPlayer:GetAttribute("CurrentRoom")
-                        repeat task.wait() until game.Players.LocalPlayer:GetAttribute"CurrentRoom"~=currRoom
-                        if Equipped then
-                            createEntity()
-                        end
-                    end
-                end
-            end)
             Char:SetAttribute("Hiding", true)
             for _, v in next, Hum:GetPlayingAnimationTracks() do
                 v:Stop()
@@ -1973,25 +1938,25 @@ MainTab:CreateButton({
     Callback=function()
         local e
         task.spawn(function() e=spawnEntity(SelectedDoorsEntity) end)
-        Rayfield:Notify({
-            Title = "Spawned Entity",
-            Content = "The entity "..SelectedDoorsEntity.." has spawned",
-            Duration = 5,
-            Image = 4483362458,
-            Actions = {
-                Okay={
-                    Name="Ok!",
-                    Callback=function() end
-                },
-                Remove={
-                    Name="Remove",
-                    Callback=function() 
-                        repeat task.wait() until typeof(e)=="Instance"
-                        e:Destroy()
-                    end
-                }
-            },
-        })
+        -- Rayfield:Notify({
+        --     Title = "Spawned Entity",
+        --     Content = "The entity "..SelectedDoorsEntity.." has spawned",
+        --     Duration = 5,
+        --     Image = 4483362458,
+        --     Actions = {
+        --         Okay={
+        --             Name="Ok!",
+        --             Callback=function() end
+        --         },
+        --         Remove={
+        --             Name="Remove",
+        --             Callback=function() 
+        --                 repeat task.wait() until typeof(e)=="Instance"
+        --                 e:Destroy()
+        --             end
+        --         }
+        --     },
+        -- })
     end
 })
 local SelectedEntityLabel = MainTab:CreateLabel("You currently have the entity "..SelectedDoorsEntity.." selected")
@@ -2058,25 +2023,25 @@ MainTab:CreateKeybind({
 	Callback = function(Keybind)
         local e
         task.spawn(function() spawnEntity(SelectedDoorsEntity) end)
-        Rayfield:Notify({
-            Title = "Spawned Entity",
-            Content = "The entity "..SelectedDoorsEntity.." has spawned",
-            Duration = 5,
-            Image = 4483362458,
-            Actions = {
-                Okay={
-                    Name="Ok!",
-                    Callback=function() end
-                },
-                Remove={
-                    Name="Remove",
-                    Callback=function() 
-                        repeat task.wait() until typeof(e)=="Instance"
-                        e:Destroy()
-                    end
-                }
-            },
-        })
+        -- Rayfield:Notify({
+        --     Title = "Spawned Entity",
+        --     Content = "The entity "..SelectedDoorsEntity.." has spawned",
+        --     Duration = 5,
+        --     Image = 4483362458,
+        --     Actions = {
+        --         Okay={
+        --             Name="Ok!",
+        --             Callback=function() end
+        --         },
+        --         Remove={
+        --             Name="Remove",
+        --             Callback=function() 
+        --                 repeat task.wait() until typeof(e)=="Instance"
+        --                 e:Destroy()
+        --             end
+        --         }
+        --     },
+        -- })
 	end,
 })
 
@@ -2123,25 +2088,25 @@ MainTab:CreateToggle({
                 old=game.Players.LocalPlayer:GetAttribute("CurrentRoom")
                 local e
                 task.spawn(function() e=spawnEntity(SelectedDoorsEntity) end)
-                Rayfield:Notify({
-                    Title = "Spawned Entity",
-                    Content = "The entity "..SelectedDoorsEntity.." has spawned",
-                    Duration = 5,
-                    Image = 4483362458,
-                    Actions = {
-                        Okay={
-                            Name="Ok!",
-                            Callback=function() end
-                        },
-                        Remove={
-                            Name="Remove",
-                            Callback=function() 
-                                repeat task.wait() until typeof(e)=="Instance"
-                                e:Destroy()
-                            end
-                        }
-                    },
-                })
+                -- Rayfield:Notify({
+                --     Title = "Spawned Entity",
+                --     Content = "The entity "..SelectedDoorsEntity.." has spawned",
+                --     Duration = 5,
+                --     Image = 4483362458,
+                --     Actions = {
+                --         Okay={
+                --             Name="Ok!",
+                --             Callback=function() end
+                --         },
+                --         Remove={
+                --             Name="Remove",
+                --             Callback=function() 
+                --                 repeat task.wait() until typeof(e)=="Instance"
+                --                 e:Destroy()
+                --             end
+                --         }
+                --     },
+                -- })
             end)
         else
             con:Disconnect()
@@ -2166,25 +2131,25 @@ MainTab:CreateInput({
                 task.spawn(function()
                     local e
                     task.spawn(function() e=spawnEntity(SelectedDoorsEntity) end)
-                    Rayfield:Notify({
-                        Title = "Spawned Entity",
-                        Content = "The entity "..SelectedDoorsEntity.." has spawned",
-                        Duration = 5,
-                        Image = 4483362458,
-                        Actions = {
-                            Okay={
-                                Name="Ok!",
-                                Callback=function() end
-                            },
-                            Remove={
-                                Name="Remove",
-                                Callback=function() 
-                                    repeat task.wait() until typeof(e)=="Instance"
-                                    e:Destroy()
-                                end
-                            }
-                        },
-                    })
+                    -- Rayfield:Notify({
+                    --     Title = "Spawned Entity",
+                    --     Content = "The entity "..SelectedDoorsEntity.." has spawned",
+                    --     Duration = 5,
+                    --     Image = 4483362458,
+                    --     Actions = {
+                    --         Okay={
+                    --             Name="Ok!",
+                    --             Callback=function() end
+                    --         },
+                    --         Remove={
+                    --             Name="Remove",
+                    --             Callback=function() 
+                    --                 repeat task.wait() until typeof(e)=="Instance"
+                    --                 e:Destroy()
+                    --             end
+                    --         }
+                    --     },
+                    -- })
                 end)
 			end
         end
