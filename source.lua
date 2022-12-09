@@ -1672,7 +1672,7 @@ Tools:CreateKeybind({
 --#endregion
 --#region Global
 
-global:CreateSection("Global Entity Modifications")
+global:CreateSection("Global Morphs")
 
 local disableFigure
 disableFigure=global:CreateToggle({
@@ -1741,7 +1741,7 @@ disableFigure=global:CreateToggle({
     end
 })
 global:CreateLabel("This script uses networkownership to move figure, which means it must have NO AI whatsoever")
-
+global:CreateSection("Global Entity Modifications")
 local removeEntities
 local rmEntitiesCon
 local rmEntitiesConTwo
