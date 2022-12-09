@@ -1,3 +1,5 @@
+repeat task.wait() until game:IsLoaded() and game.Players.LocalPlayer and game.Players.LocalPlayer.Character
+
 --#region Setup
 if getgenv then
     if getgenv().DGEM_LOADED==true then
