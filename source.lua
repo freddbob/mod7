@@ -853,7 +853,8 @@ Tools:CreateButton({
         function v1.AddDurability()
             InTrans = true
             hum:SetAttribute("SpeedBoost", 11)
-            tweenService:Create(workspace.CurrentCamera, TweenInfo.new(Duration), {FieldOfView = 70}):Play()
+            tweenService:Create(workspace.CurrentCamera, TweenInfo.new(.2), {FieldOfView=100}):Play()
+            delay(.2, function() tweenService:Create(workspace.CurrentCamera, TweenInfo.new(Duration), {FieldOfView = 70}):Play() end)
             Instance.new("IntValue", hum).Name="SpeedBoostVal"
             hum.SpeedBoostVal.Value=11
             hum:FindFirstChildWhichIsA"IntValue":GetPropertyChangedSignal("Value"):Connect(function()
@@ -863,6 +864,7 @@ Tools:CreateButton({
                 Value=0
             }):Play()
             wait(Duration)
+            hum.SpeedBoostVal:Destroy()
             InTrans = false
         end
 
