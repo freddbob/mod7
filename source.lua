@@ -728,6 +728,20 @@ DoorsMods:CreateButton({
         loadstring(game:HttpGet("https://raw.githubusercontent.com/ZepsyyCodesLUA/Utilities/main/DOORSthanksgiving"))()
 	end,
 })
+
+DoorsMods:CreateToggle({
+    Name="Timestop",
+    CurrentValue=false,
+    Flag="timestop",
+    Callback=function(val)
+        if val==true then
+            game:GetService"NetworkClient":SetOutgoingKBPSLimit(0)
+        else
+            game:GetService"NetworkClient":SetOutgoingKBPSLimit(500)
+        end
+    end    
+})
+
 --#endregion
 --#endregion
 --#region Character Mods
@@ -815,6 +829,8 @@ CharacterMods:CreateSlider({
     end
 })
 
+
+
 game:GetService("RunService").RenderStepped:Connect(function()
     if EVC.CurrentValue==true then game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Speed end
 end)
@@ -833,7 +849,6 @@ Tools:CreateButton({
         local tweenService = game:GetService("TweenService")
 
         local sound_open = Vitamins.Handle:FindFirstChild("sound_open")
-
         local char = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacteAdded:Wait()
         local hum = char:WaitForChild("Humanoid")
 
@@ -855,16 +870,16 @@ Tools:CreateButton({
             hum:SetAttribute("SpeedBoost", 11)
             tweenService:Create(workspace.CurrentCamera, TweenInfo.new(.2), {FieldOfView=100}):Play()
             delay(.2, function() tweenService:Create(workspace.CurrentCamera, TweenInfo.new(Duration), {FieldOfView = 70}):Play() end)
-            Instance.new("IntValue", hum).Name="SpeedBoostVal"
-            hum.SpeedBoostVal.Value=11
-            hum:FindFirstChildWhichIsA"IntValue":GetPropertyChangedSignal("Value"):Connect(function()
-                hum:SetAttribute("SpeedBoost", hum.SpeedBoostVal.Value)
-            end)
             tweenService:Create(hum.SpeedBoostVal, TweenInfo.new(Duration), {
                 Value=0
             }):Play()
+            task.spawn(function()
+                repeat
+                    task.wait(.22)
+                    hum:SetAttribute("SpeedBoost", hum:GetAttribute"SpeedBoost"-.1)
+                until hum:GetAttribute("SpeedBoost")==0
+            end)
             wait(Duration)
-            hum.SpeedBoostVal:Destroy()
             InTrans = false
         end
 
@@ -907,7 +922,7 @@ Tools:CreateButton({
                                 v1.AddDurability()
                             end)
                             if xUsed==0 then
-                                Vitamins:Destroy()
+                                delay(sound_open.TimeLength+.2, function() Vitamins:Destroy() end)
                             end
                         end
                     end)
