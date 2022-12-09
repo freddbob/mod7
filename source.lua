@@ -737,9 +737,9 @@ DoorsMods:CreateToggle({
     Flag="timestop",
     Callback=function(val)
         if val==true then
-            game:GetService"NetworkClient":SetOutgoingKBPSLimit(.01)
+            game.Players.LocalPlayer.GameplayPaused=true
         else
-            game:GetService"NetworkClient":SetOutgoingKBPSLimit(0)
+            game.Players.LocalPlayer.GameplayPaused=false
         end
     end    
 })
