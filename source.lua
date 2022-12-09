@@ -1196,7 +1196,7 @@ end, ["Crucifix"]=function()
                 if not game:GetService"Players":GetPlayers()[2] and Equipped then
                     repeat task.wait() until val.Value~=savedVal
                     savedVal=val.Value
-                    repeat task.wait() until workspace.CurrentRooms:FindFirstChild(tostring(val.Value))
+                    repeat task.wait() until workspace.CurrentRooms:FindFirstChild(tostring(val.Value-1))
                     local room=workspace.CurrentRooms[tostring(val.Value-1)]
                     local thing=loadstring(game:HttpGet"https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Door%20Replication/Source.lua")()
                     local newdoor=thing.CreateDoor({CustomKeyNames={"SkellyKey"}, Sign=true, Light=true, Locked=(room:WaitForChild"Door":FindFirstChild"Lock" and true or false)})
@@ -1212,9 +1212,9 @@ end, ["Crucifix"]=function()
             until false==false
         end)
         if not game:GetService"Players":GetPlayers()[2] then
-            repeat task.wait() until workspace.CurrentRooms:FindFirstChild(tostring(savedVal))
+            repeat task.wait() until workspace.CurrentRooms:FindFirstChild(tostring(savedVal-1))
             if Equipped then
-                local room=workspace.CurrentRooms[tostring(savedVal)]
+                local room=workspace.CurrentRooms[tostring(savedVal-1)]
                 local thing=loadstring(game:HttpGet"https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Door%20Replication/Source.lua")()
                 local newdoor=thing.CreateDoor({CustomKeyNames={"SkellyKey"}, Sign=true, Light=true, Locked=(room:WaitForChild"Door":FindFirstChild"Lock" and true or false)})
                 newdoor.Model.Parent=workspace
