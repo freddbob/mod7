@@ -1375,9 +1375,9 @@ end, ["Crucifix"]=function()
                     c.Core.Repent:Play()
                     delay(c.Core.Repent.TimeLength, function() c.Core.Attachment.Angry.Enabled=false end)
                     c.Core.Attachment.Angry.Enabled=true
-                    ModuleScripts.MainGame.camShaker:ShakeOnce(8, 8, c.Core.Repent.TimeLength, 0.15)
+                    ModuleScripts.MainGame.camShaker:ShakeOnce(4, 4, c.Core.Repent.TimeLength, 0.15)
                     wait(2+c.Core.Repent.TimeLength+.1)
-                    ModuleScripts.MainGame.camShaker:ShakeOnce(16, 16, c.Core.Repent.TimeLength*2, 0.15)
+                    ModuleScripts.MainGame.camShaker:ShakeOnce(8, 8, c.Core.Repent.TimeLength*2, 0.15)
                     c.Core.Repent:Play()
                     c.Core.Attachment.Angry.Enabled=true
                     wait(c.Core.Repent.TimeLength+.1)
