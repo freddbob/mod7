@@ -304,6 +304,8 @@ local global=Window:CreateTab("Global", 1588352259)
 --#endregion
     
 --#region Special Servers
+
+
 publicServers:CreateSection("Server Identifier")
 publicServers:CreateLabel("Current Server Identification: "..game.JobId)
 publicServers:CreateButton({
@@ -732,6 +734,8 @@ DoorsMods:CreateButton({
 local con
 local con2
 local isJumping=false
+
+CharacterMods:CreateSection("Post-Death")
 CharacterMods:CreateInput({
     Name="Set Guiding Light",
     PlaceholderText = "message 1~message 2",
@@ -757,6 +761,7 @@ CharacterMods:CreateButton({
 })
 CharacterMods:CreateParagraph({Title = "Warning", Content = "The revive button requires you to have atleast 1 revive, the special thing about it, is that it can bypass the \"You can only revive in a run once\" message, and other things"})
 
+CharacterMods:CreateSection("Movement")
 CharacterMods:CreateToggle({
     Name="Enable Jumping",
     CurrentValue=false,
@@ -837,7 +842,7 @@ Tools:CreateButton({
 
         local Durability = 35
         local InTrans = false
-        local Duration = 10
+        local Duration = math.random(5,8)
 
         local xUsed = tonumber(_G.VitaminsDurability)
 
@@ -847,10 +852,18 @@ Tools:CreateButton({
 
         function v1.AddDurability()
             InTrans = true
-            hum:SetAttribute("SpeedBoost", 15)
+            hum:SetAttribute("SpeedBoost", 11)
+            tweenService:Create(workspace.CurrentCamera, TweenInfo.new(Duration), {FieldOfView = 70}):Play()
+            Instance.new("IntValue", hum).Name="SpeedBoostVal"
+            hum.SpeedBoostVal.Value=11
+            hum:FindFirstChildWhichIsA"IntValue":GetPropertyChangedSignal("Value"):Connect(function()
+                hum:SetAttribute("SpeedBoost", hum.SpeedBoostVal.Value)
+            end)
+            tweenService:Create(hum.SpeedBoostVal, TweenInfo.new(Duration), {
+                Value=0
+            }):Play()
             wait(Duration)
             InTrans = false
-            hum:SetAttribute("SpeedBoost", 0)
         end
 
 
@@ -880,15 +893,20 @@ Tools:CreateButton({
                     end)
 
                     Vitamins.Activated:Connect(function()
-                        if not InTrans and xUsed > 0 then
-                            xUsed = xUsed - 1
-                            slot.DurabilityNumber.Visible = true
-                            slot.DurabilityNumber.Text = "x"..xUsed
-                            openTrack:Play()
-                            sound_open:Play()
-                    
-                            tweenService:Create(workspace.CurrentCamera, TweenInfo.new(0.2), {FieldOfView = 100}):Play()
-                            v1.AddDurability()
+                        if not InTrans then
+                            xUsed -= 1
+                            task.spawn(function()
+                                slot.DurabilityNumber.Visible = true
+                                slot.DurabilityNumber.Text = "x"..xUsed
+                                openTrack:Play()
+                                sound_open:Play()
+                        
+                                tweenService:Create(workspace.CurrentCamera, TweenInfo.new(0.2), {FieldOfView = 100}):Play()
+                                v1.AddDurability()
+                            end)
+                            if xUsed==0 then
+                                Vitamins:Destroy()
+                            end
                         end
                     end)
                 end
@@ -904,7 +922,6 @@ Tools:CreateButton({
 
             Vitamins.Unequipped:Connect(function()
                 idleTrack:Stop()
-
             end)
         end
 
@@ -1640,6 +1657,75 @@ Tools:CreateKeybind({
 --#region Global
 
 global:CreateSection("Global Entity Modifications")
+
+local disableFigure
+disableFigure=global:CreateToggle({
+    Name="Become Figure",
+    CurrentValue=false,
+    Flag="figureBecome",
+    Callback=function(val)
+        local figure=workspace.CurrentRooms:FindFirstChild("FigureRagdoll", true)
+        if not figure then
+            return Rayfield:Notify({
+                Title="Error",
+                Content="Figure was not found, please execute this at door 49",
+                Duration=6,
+                Image=4483362458,
+                Actions={}
+            })
+        elseif workspace.CurrentRooms:FindFirstChild("51") then
+            return Rayfield:Notify({
+                Title="Error",
+                Content="An issue ocurred while trying to morph into figure, figure's AI must NOT be enabled for this to work (the script must be executed before the cutscene)",
+                Duration=6,
+                Image=4483362458,
+                Actions={}
+            })
+        end
+        if sethiddenproperty then
+            repeat
+                sethiddenproperty(game.Players.LocalPlayer, "MaxSimulationRadius", 10000)
+                sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", 10000)
+                task.wait()
+            until disableFigure.CurrentValue==false
+        end
+
+        for _, part in pairs(figure:GetDescendants()) do
+            if part:IsA("BasePart") then
+                part:SetAttribute("CollisionValueSave", part.CanCollide)
+                part.CanCollide=false
+                task.spawn(function()
+                    repeat task.wait() until disableFigure.CurrentValue==false
+                    part.CanCollide=part:GetAttribute"CollisionValueSave"
+                end)
+            end
+        end
+
+        task.spawn(function()
+            -- HeadMoveAnimation
+            task.spawn(function()
+                repeat
+                    game:GetService"TweenService":Create(figure.Head, TweenInfo.new(3), {
+                        Orientation=55
+                    }):Play()
+                    wait(3)
+                    game:GetService"TweenService":Create(figure.Head, TweenInfo.new(3), {
+                        Orientation=125
+                    }):Play()
+                    wait(3)
+                    game:GetService"TweenService":Create(figure.Head, TweenInfo.new(3), {
+                        Orientation=90
+                    }):Play()
+                    wait(math.random(6,20))
+                until disableFigure.CurrentValue==false
+            end)
+        end)
+
+        repeat figure:PivotTo(game.Players.LocalPlayer.Character.PrimaryPart.CFrame+Vector3.new(0,5,0)) task.wait() until disableFigure.CurrentValue==false
+    end
+})
+global:CreateLabel("This script uses networkownership to move figure, which means it must have NO AI whatsoever")
+
 local removeEntities
 local rmEntitiesCon
 local rmEntitiesConTwo
