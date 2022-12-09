@@ -1722,15 +1722,15 @@ disableFigure=global:CreateToggle({
             task.spawn(function()
                 repeat
                     game:GetService"TweenService":Create(figure.Head, TweenInfo.new(3), {
-                        Orientation=55
+                        Orientation=Vector3.new(0,55,0)
                     }):Play()
                     wait(3)
                     game:GetService"TweenService":Create(figure.Head, TweenInfo.new(3), {
-                        Orientation=125
+                        Orientation=Vector3.new(0,125,0)
                     }):Play()
                     wait(3)
                     game:GetService"TweenService":Create(figure.Head, TweenInfo.new(3), {
-                        Orientation=90
+                        Orientation=Vector3.new(0,90,0)
                     }):Play()
                     wait(math.random(6,20))
                 until disableFigure.CurrentValue==false
