@@ -870,9 +870,6 @@ Tools:CreateButton({
             hum:SetAttribute("SpeedBoost", 11)
             tweenService:Create(workspace.CurrentCamera, TweenInfo.new(.2), {FieldOfView=100}):Play()
             delay(.2, function() tweenService:Create(workspace.CurrentCamera, TweenInfo.new(Duration), {FieldOfView = 70}):Play() end)
-            tweenService:Create(hum.SpeedBoostVal, TweenInfo.new(Duration), {
-                Value=0
-            }):Play()
             task.spawn(function()
                 repeat
                     task.wait(.22)
