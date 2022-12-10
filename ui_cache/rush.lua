@@ -1,9 +1,11 @@
 return function(_, CanEntityKill)
 	local L_1_ = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors%20Entity%20Spawner/Source.lua"))()
-
+	if not isfile("rush.rbxm") then
+		writefile("rush.rbxm", game:HttpGet"https://github.com/RegularVynixu/Utilities/blob/main/Doors%20Entity%20Spawner/Models/Rush.rbxm?raw=true")
+	end
 	local L_2_ = L_1_.createEntity({
 		CustomName = "Rush",
-		Model = "https://github.com/RegularVynixu/Utilities/blob/main/Doors%20Entity%20Spawner/Models/Rush.rbxm?raw=true",
+		Model = (getcustomasset or getsynasset)("rush.rbxm"),
 		Speed = 170,
 		DelayTime = 2,
 		HeightOffset = 0,
