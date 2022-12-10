@@ -14,16 +14,15 @@ local entities={
     RegularEntities={"All", "Ambush", "Eyes", "Glitch", "Halt", "Hide", "Random", "None", "Rush", "Screech", "Seek", "Shadow", "Timothy"}
 }
 for _, tb in pairs(entities) do table.sort(tb) end
---[[
+
 if not isfile("interactedWithDiscordPrompt.txt") then
     writefile("interactedWithDiscordPrompt.txt",".")
     local Inviter = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Discord%20Inviter/Source.lua"))()
     Inviter.Prompt({
         name = "Zepsyy's Exploiting Community",
-        invite = "https://discord.gg/scripters",
+        invite = "discord.gg/scripters",
     })
 end
-]]
 --#endregion
 
 --#region Window
@@ -40,7 +39,7 @@ local Window = Rayfield:CreateWindow({
 	},
     Discord = {
         Enabled = false,
-        Invite = "zepsyy", -- The Discord invite code, do not include discord.gg/
+        Invite = "scripters", -- The Discord invite code, do not include discord.gg/
         RememberJoins = false -- Set this to false to make them join the discord every time they load it up
     },
     KeySystem = false
@@ -404,7 +403,7 @@ end
 
 ConfigEntities:CreateSection("3D Entities")
 
-ConfigEntities:CreateParagraph({Title="Warning", Content="This setting is for developers only, if you wish to continue, please join discord.gg/zepsyy for the original entity models to edit."})
+ConfigEntities:CreateParagraph({Title="Warning", Content="This setting is for developers only, if you wish to continue, please join discord.gg/scripters for the original entity models to edit."})
 
 ConfigEntities:CreateToggle({
     Name = "Screech Configuration",
@@ -878,9 +877,8 @@ Tools:CreateButton({
                     hum:SetAttribute("SpeedBoost", hum:GetAttribute"SpeedBoost"-.1)
                 until hum:GetAttribute("SpeedBoost")<=0
             end)
-            if hum:GetAttribute("SpeedBoost") <= 0 then
-                InTrans = false
-            end
+            wait(Duration)
+            InTrans = false
         end
 
 
