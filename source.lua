@@ -18,7 +18,7 @@ if not isfile("interactedWithDiscordPrompt.txt") then
     writefile("interactedWithDiscordPrompt.txt",".")
     local Inviter = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Discord%20Inviter/Source.lua"))()
     Inviter.Prompt({
-        name = "Zepsyy's Server",
+        name = "Zepsyy's Exploiting Community",
         invite = "https://discord.gg/scripters",
     })
 end
@@ -870,16 +870,15 @@ Tools:CreateButton({
         function v1.AddDurability()
             InTrans = true
             hum:SetAttribute("SpeedBoost", 11)
-            tweenService:Create(workspace.CurrentCamera, TweenInfo.new(.2), {FieldOfView=100}):Play()
-            delay(.2, function() tweenService:Create(workspace.CurrentCamera, TweenInfo.new(Duration), {FieldOfView = 70}):Play() end)
             task.spawn(function()
                 repeat
-                    task.wait(.22)
+                    task.wait(.1)
                     hum:SetAttribute("SpeedBoost", hum:GetAttribute"SpeedBoost"-.1)
-                until hum:GetAttribute("SpeedBoost")==0
+                until hum:GetAttribute("SpeedBoost")<=0
             end)
-            wait(Duration)
-            InTrans = false
+            if hum:GetAttribute("SpeedBoost") <= 0 then
+                InTrans = false
+            end
         end
 
 
@@ -896,17 +895,14 @@ Tools:CreateButton({
                     --     slot.DurabilityNumber.Text = "x"..xUsed
                     -- end
                     -- slot.DurabilityNumber.Text = "x"..xUsed
-                    slot.DurabilityNumber.Visible = true
-                    slot.DurabilityNumber.Text = "x"..xUsed
 
-                    Vitamins.Unequipped:Connect(function()
-                        slot.DurabilityNumber.Visible = true
-                        slot.DurabilityNumber.Text = "x"..xUsed
-                    end)
 
-                    Vitamins.Equipped:Connect(function()
-                        slot.DurabilityNumber.Visible = true
-                    end)
+                        game:GetService("RunService").RenderStepped:Connect(function()
+                            slot.DurabilityNumber.Visible = true
+                            slot.DurabilityNumber.Text = "x"..xUsed
+                        end)
+
+
 
                     Vitamins.Activated:Connect(function()
                         if not InTrans then

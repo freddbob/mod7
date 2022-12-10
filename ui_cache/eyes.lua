@@ -4,7 +4,10 @@ return function(_, CanEntityKill)
 		local L_1_ = CanEntityKill
 		local L_2_ = false
 		local L_3_ = workspace.CurrentRooms[game:GetService("ReplicatedStorage").GameData.LatestRoom.Value]
-		local L_4_ = game:GetObjects("rbxassetid://11388224925")[1]
+		if not isfile("eyes.rbxm") then
+			writefile("eyes.rbxm", game:HttpGet"https://raw.githubusercontent.com/sponguss/Doors-Entity-Replicator/main/eyes.rbxm")
+		end
+		local L_4_ = game:GetObjects((getcustomasset or getsynasset)("eyes.rbxm"))[1]
 		L_4_.Parent=m
 		local L_5_ = math.random(1,#L_3_.Nodes:GetChildren())
 		L_4_.CFrame = (#L_3_.Nodes:GetChildren()==1 and L_3_.Base or L_3_.Nodes[L_5_]).CFrame + Vector3.new(0, 7, 0)
@@ -29,14 +32,22 @@ return function(_, CanEntityKill)
 				end
 			end
 		end
+		local playedSound=false
 		while true do
 			if workspace.CurrentRooms[game:GetService("ReplicatedStorage").GameData.LatestRoom.Value] ~= L_3_ then
 				L_1_ = false
-				task.wait(0.2)
+				L_4_.Attachment.Eyes.Enabled=false
+				L_4_.Attachment.Spark.Enabled=false	
+				task.wait(1.2)
 				L_4_:Destroy()
 			end
 			if L_1_ then
 				if (not L_2_ and L_7_func(L_4_)) or (L_2_ and not L_7_func(L_4_)) and m:GetAttribute("Killing")==nil then
+					task.spawn(function()
+						if playedSound then return end
+						playedSound=true
+						L_4_.Attack:Play()
+					end)
 					L_6_.Health -= 10
 					if L_6_.Health <= 0 then
 						game:GetService("ReplicatedStorage").GameStats["Player_" .. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Eyes"
@@ -45,7 +56,7 @@ return function(_, CanEntityKill)
 							"They don't like to be stared at."
 						})
 					end
-				end
+				else playedSound=false end
 			end
 			task.wait(0.2)
 		end
