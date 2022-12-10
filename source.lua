@@ -1086,6 +1086,7 @@ end, ["Crucifix"]=function()
     }
     
     -- Functions
+    --[[
     task.spawn(function()
         local function createEntity()
             local L_1_ = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors%20Entity%20Spawner/Source.lua"))()
@@ -1240,6 +1241,7 @@ end, ["Crucifix"]=function()
             end
         end
     end)
+    ]]
 
     local function setupCrucifix(tool)
         tool.Equipped:Connect(function()
@@ -1268,7 +1270,8 @@ end, ["Crucifix"]=function()
             LeftArm.LeftShoulder.C1 = LeftC1
         end)
     end
-    
+
+
     -- Scripts
     
     local CrucifixTool = game:GetObjects("rbxassetid://11590476113")[1]

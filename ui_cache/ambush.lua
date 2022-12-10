@@ -5,7 +5,7 @@ return function(_, CanEntityKill)
 	end
 	local L_2_ = L_1_.createEntity({
 		CustomName = "Ambush", -- Custom name of your entity
-		Model = (getcustomasset or getsynasset)("ambush.rbxm"), -- Can be GitHub file or rbxassetid
+		Model = "rbxassetid://11790444400", -- Can be GitHub file or rbxassetid
 		Speed = 400, -- Percentage, 100 = default Rush speed
 		DelayTime = 5, -- Time before starting cycles (seconds)
 		HeightOffset = 0,
