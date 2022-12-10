@@ -133,5 +133,4 @@ return function(_, CanEntityKill)
 	task.spawn(function()
 		L_1_.runEntity(L_2_)
 	end)
-	return L_2_.Model
 end
