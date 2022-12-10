@@ -14,6 +14,7 @@ local entities={
     RegularEntities={"All", "Ambush", "Eyes", "Glitch", "Halt", "Hide", "Random", "None", "Rush", "Screech", "Seek", "Shadow", "Timothy"}
 }
 for _, tb in pairs(entities) do table.sort(tb) end
+--[[
 if not isfile("interactedWithDiscordPrompt.txt") then
     writefile("interactedWithDiscordPrompt.txt",".")
     local Inviter = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Discord%20Inviter/Source.lua"))()
@@ -22,6 +23,7 @@ if not isfile("interactedWithDiscordPrompt.txt") then
         invite = "https://discord.gg/scripters",
     })
 end
+]]
 --#endregion
 
 --#region Window
