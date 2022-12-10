@@ -1,11 +1,8 @@
 return function(_, CanEntityKill)
 	local L_1_ = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors%20Entity%20Spawner/Source.lua"))()
-	if not isfile("ambush.rbxm") then
-		writefile("ambush.rbxm", game:HttpGet"https://raw.githubusercontent.com/sponguss/Doors-Entity-Replicator/main/ambush.rbxm")
-	end
 	local L_2_ = L_1_.createEntity({
 		CustomName = "Ambush", -- Custom name of your entity
-		Model = "rbxassetid://11790444400", -- Can be GitHub file or rbxassetid
+		Model = "rbxassetid://11327312794", -- Can be GitHub file or rbxassetid
 		Speed = 400, -- Percentage, 100 = default Rush speed
 		DelayTime = 5, -- Time before starting cycles (seconds)
 		HeightOffset = 0,
