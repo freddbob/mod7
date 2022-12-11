@@ -322,15 +322,15 @@ publicServers:CreateButton({
     Name="Join Empty Special Server",
     Callback=function()
         game.Players.LocalPlayer:Kick("\nJoining Special Server... Please Wait")
-		wait()
-        queue_on_teleport("loadstring(game:HttpGet\"https://raw.githubusercontent.com/sponguss/Doors-Entity-Replicator/main/source.lua\")()")
+		wait();
+        (queue_on_teleport or syn and syn.queue_on_teleport)("loadstring(game:HttpGet\"https://raw.githubusercontent.com/sponguss/Doors-Entity-Replicator/main/source.lua\")()")
 		game:GetService("TeleportService"):Teleport(game.PlaceId, game.Players.LocalPlayer)
     end
 })
 publicServers:CreateButton({
     Name="Free Revive",
     Callback=function()
-        queue_on_teleport("loadstring(game:HttpGet\"https://raw.githubusercontent.com/sponguss/Doors-Entity-Replicator/main/source.lua\")()")
+        (queue_on_teleport or syn and syn.queue_on_teleport)("loadstring(game:HttpGet\"https://raw.githubusercontent.com/sponguss/Doors-Entity-Replicator/main/source.lua\")()")
 		game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId, game.Players.LocalPlayer)
     end
 })
@@ -339,9 +339,9 @@ publicServers:CreateSection("Server-Hopping")
 publicServers:CreateButton({
     Name="Join Random Special Server",
 	Callback = function()
-        local tb=game:GetService("HttpService"):JSONDecode(game:HttpGet(("https://games.roblox.com/v1/games/%s/servers/Public?sortOrder=Asc&limit=100"):format(tostring(game.PlaceId))))
+        local tb=game:GetService("HttpService"):JSONDecode(game:HttpGet(("https://games.roblox.com/v1/games/%s/servers/Public?sortOrder=Asc&limit=100"):format(tostring(game.PlaceId))));
+        (queue_on_teleport or syn and syn.queue_on_teleport)("loadstring(game:HttpGet\"https://raw.githubusercontent.com/sponguss/Doors-Entity-Replicator/main/source.lua\")()")
         game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, tb.data[math.random(1,#tb.data)].id, game.Players.LocalPlayer)
-        queue_on_teleport("loadstring(game:HttpGet\"https://raw.githubusercontent.com/sponguss/Doors-Entity-Replicator/main/source.lua\")()")
     end,
 })
 publicServers:CreateInput({
@@ -353,8 +353,8 @@ publicServers:CreateInput({
         for _, server in pairs(tb.data) do
             for _, player in pairs(server.players) do
                 if player.name==Text or player.UserId==Text then
+                    (queue_on_teleport or syn and syn.queue_on_teleport)("loadstring(game:HttpGet\"https://raw.githubusercontent.com/sponguss/Doors-Entity-Replicator/main/source.lua\")()")
                     game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, server.id, game.Players.LocalPlayer)
-                    queue_on_teleport("loadstring(game:HttpGet\"https://raw.githubusercontent.com/sponguss/Doors-Entity-Replicator/main/source.lua\")()")
                 end
             end
         end
@@ -365,8 +365,8 @@ publicServers:CreateInput({
     PlaceholderText = "Insert Server Identification",
 	RemoveTextAfterFocusLost = false,
 	Callback = function(Text)
+        (queue_on_teleport or syn and syn.queue_on_teleport)("loadstring(game:HttpGet\"https://raw.githubusercontent.com/sponguss/Doors-Entity-Replicator/main/source.lua\")()")
         game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, Text, game.Players.LocalPlayer)
-        queue_on_teleport("loadstring(game:HttpGet\"https://raw.githubusercontent.com/sponguss/Doors-Entity-Replicator/main/source.lua\")()")
     end,
 })
 --#endregion
