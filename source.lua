@@ -1838,6 +1838,7 @@ global:CreateButton({
 	Callback = function()
 		if workspace.CurrentRooms["51"] then
 			local char = game.Players.LocalPlayer.Character
+            local pos=char.HumanoidRootPart.CFrame
 			local door = workspace.CurrentRooms["51"].Door
 			char:PivotTo(door.Hidden.CFrame)
 			if door:FindFirstChild"ClientOpen" then
