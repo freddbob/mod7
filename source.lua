@@ -1,3 +1,12 @@
+--discord.gg/boronide, code generated using luamin.js™
+
+
+
+--discord.gg/boronide, code generated using luamin.js™
+
+
+
+
 repeat
 	task.wait()
 until game:IsLoaded() and game.Players.LocalPlayer and game.Players.LocalPlayer.Character
