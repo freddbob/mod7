@@ -1232,7 +1232,7 @@ local toolFuncs = {
                     c.Parent = ins.Parent
                     ins:Destroy()
                 end
-				dupeCrucifix(Configuration.Trapping.CustomEntities.TimeToRise, c.PrimaryPart)
+				task.spawn(dupeCrucifix, Configuration.Trapping.CustomEntities.TimeToRise, c.PrimaryPart)
                 if Configuration.Trapping.CustomEntities.UseChains then
                     local EntityRoot = c.PrimaryPart
                     local Fake_FaceAttach = Instance.new("Attachment", EntityRoot)
@@ -1294,7 +1294,7 @@ local toolFuncs = {
 						c.Core.Attachment.Angry.Enabled = true
 						wait(c.Core.Repent.TimeLength + .1)
 						c.Core.Repent:Play()
-						dupeCrucifix(8, c.Core)
+						task.spawn(dupeCrucifix, 4, c.Core)
 						ModuleScripts.MainGame.camShaker:ShakeOnce(10, 10, c.Core.Scream.TimeLength + 2, 0.15);
 						wait(2)
 						c.Core.Scream:Play();
@@ -1334,7 +1334,7 @@ local toolFuncs = {
 					clone.Parent = ins.Parent
 					clone.Anchored = true
 					ins:Remove()
-					dupeCrucifix(13, ins)
+					task.spawn(dupeCrucifix, 13, ins)
 					ModuleScripts.MainGame.camShaker:ShakeOnce(40, 10, 5, 0.15)
 					for _, thing in pairs(clone:GetDescendants()) do
 						if thing:IsA("SpotLight") then
