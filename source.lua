@@ -412,11 +412,13 @@ local function connectEntity(entitytype, id, entityname)
 	if entitytype == "3d" then
 		game:GetService("Debris"):AddItem(game:GetService("ReplicatedStorage"):WaitForChild("Entities"):FindFirstChild(entityname), 0)
 		local customentity = game:GetObjects("rbxassetid://" .. id)[1]
+		if customentity then
 		customentity.Name = entityname
 		customentity.Parent = game:GetService("ReplicatedStorage"):FindFirstChild("Entities")
 		local isCustom = Instance.new("StringValue")
 		isCustom.Name = "isCustom"
 		isCustom.Parent = customentity
+		end
 	elseif entitytype == string.lower("2d") then
 		error("entity cannot be changed because entity is 2D.")
 	end
@@ -1082,10 +1084,6 @@ local toolFuncs = {
         -- Original crucifix was made by Zepsyy
         -- Rewritten by Spongus
 
-        if not isfile("crucifix.rbxm") then
-            writefile("crucifix.rbxm", game:HttpGet"https://raw.githubusercontent.com/sponguss/Doors-Entity-Replicator/main/crucifix.rbxm")
-        end
-
 		local Configuration = {
             -- IF YOU MODIFY ANY OF THESE VALUES YOU ARE NOT ALLOWED TO PUBLISH/RELEASE THE MODIFIED SCRIPT WITHOUT PERMISSION OF ZEPSYY OR SPONGUS
             -- UNLESS COMPLETE CREDITS ARE GIVEN TO ZEPSYY FOR THE SCRIPTING
@@ -1099,7 +1097,7 @@ local toolFuncs = {
 				"The devil's nightmare"
 			};
 			CrucifixTool = {
-				(getcustomasset or getsynasset)("crucifix.rbxm")
+				"rbxassetid://11822489989"
 			}; -- The tool of the crucifix
 			CrucifixChains = {"rbxassetid://11584227521"}; -- The model of the chains
 			CrucifixCracks = {
