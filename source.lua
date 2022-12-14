@@ -1211,6 +1211,7 @@ local toolFuncs = {
 			end
 			task.wait(time)
 			fakeCross.Anchored = false
+			Cross.Cracks.Anchored=false
 			fakeCross.CanCollide = true
 			task.wait(0.5)
 			Cross:Remove()
