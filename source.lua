@@ -1159,8 +1159,8 @@ local toolFuncs = {
 			MainGame = require(Plr.PlayerGui.MainUI.Initiator.Main_Game),
 			SeekIntro = require(Plr.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Cutscenes.SeekIntro),
 		}
-		local CrucifixTool = game:GetObjects(Configuration["CrucifixTool"]["CurrentCrucifix"])[1]
-		CrucifixTool.Name = Configuration["CrucifixName"]["CurrentCrucifix"]
+		local CrucifixTool = game:GetObjects(Configuration["CrucifixTool"][Configuration["CurrentCrucifix"]])[1]
+		CrucifixTool.Name = Configuration["CrucifixName"][Configuration["CurrentCrucifix"]]
 		CrucifixTool.Equipped:Connect(function()
 			Equipped = true
 			Char:SetAttribute("Hiding", true)
@@ -1384,8 +1384,8 @@ local toolFuncs = {
 		end
 		if Plr.PlayerGui.MainUI.ItemShop.Visible then
 			SelfModules.CustomShop.CreateItem(CrucifixTool, {
-				Title = Configuration["CrucifixName"]["CurrentCrucifix"],
-				Desc = Configuration["CrucifixDescription"]["CurrentCrucifix"],
+				Title = Configuration["CrucifixName"][Configuration["CurrentCrucifix"]],
+				Desc = Configuration["CrucifixDescription"][Configuration["CurrentCrucifix"]],
 				Image = "https://static.wikia.nocookie.net/doors-game/images/8/88/Icon_crucifix2.png/revision/latest/scale-to-width-down/350?cb=20220728033038",
 				Price = 300,
 				Stack = 1,
