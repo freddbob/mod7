@@ -1189,7 +1189,9 @@ local toolFuncs = {
 		local function dupeCrucifix(time, entityRoot)
 			local Cross = Instance.new("Model")
 			for _, thing in pairs(CrucifixTool:GetChildren()) do
-				thing:Clone().Parent = Cross;
+				local c=thing:Clone()
+				c.Parent = Cross;
+				c.Anchored=true
 			end
 			if Cross:FindFirstChild"Cracks" then
 				Cross.Cracks.Color = Configuration.CrucifixCracks[1]
