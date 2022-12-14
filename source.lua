@@ -33,11 +33,11 @@ local entities = {
 	},
 	DeveloperEntities = {
 		"Trollface",
-		"None"
+		"None",
+		"Smiler"
 	},
 	CustomEntities = {
 		"Grundge",
-		"Smiler",
 		"Trashbag",
 		"None"
 	},
