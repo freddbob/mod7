@@ -1513,12 +1513,13 @@ Tools:CreateKeybind({
 
 global:CreateSection("Global Morphs")
 
-local disableFigure
-disableFigure = global:CreateToggle({
+local figureMorphEnabled
+global:CreateToggle({
 	Name = "Become Figure",
 	CurrentValue = false,
 	Flag = "figureBecome",
 	Callback = function(val)
+		figureMorphEnabled=val
 		local figure = workspace.CurrentRooms:FindFirstChild("FigureRagdoll", true)
 		if not figure then
 			return Rayfield:Notify({
@@ -1542,7 +1543,7 @@ disableFigure = global:CreateToggle({
 				sethiddenproperty(game.Players.LocalPlayer, "MaxSimulationRadius", 10000)
 				sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", 10000)
 				task.wait()
-			until disableFigure.CurrentValue == false
+			until figureMorphEnabled == false
 		end
 		for _, part in pairs(figure:GetDescendants()) do
 			if part:IsA("BasePart") then
@@ -1551,7 +1552,7 @@ disableFigure = global:CreateToggle({
 				task.spawn(function()
 					repeat
 						task.wait()
-					until disableFigure.CurrentValue == false
+					until figureMorphEnabled == false
 					part.CanCollide = part:GetAttribute"CollisionValueSave"
 				end)
 			end
@@ -1572,13 +1573,13 @@ disableFigure = global:CreateToggle({
 						Orientation = Vector3.new(0, 90, 0)
 					}):Play()
 					wait(math.random(6, 20))
-				until disableFigure.CurrentValue == false
+				until figureMorphEnabled == false
 			end)
 		end)
 		repeat
 			figure:PivotTo(game.Players.LocalPlayer.Character.PrimaryPart.CFrame + Vector3.new(0, 5, 0))
 			task.wait()
-		until disableFigure.CurrentValue == false
+		until figureMorphEnabled == false
 	end
 })
 global:CreateLabel("This script uses networkownership to move figure, which means it must have NO AI whatsoever")
