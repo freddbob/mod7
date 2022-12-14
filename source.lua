@@ -1189,11 +1189,12 @@ local toolFuncs = {
 		local function dupeCrucifix(time, entityRoot)
 			local Cross = Instance.new("Model")
 			for _, thing in pairs(CrucifixTool:GetChildren()) do
-				local c=thing:Clone()
-				c.Parent = Cross;
-				c.Anchored=true
+				thing:Clone().Parent=Cross
 			end
+			local weld=Instance.new("ManualWeld", Cross.Handle)
+			weld.Part0=Cross.Handle
 			if Cross:FindFirstChild"Cracks" then
+				weld.Part1=Cross.Cracks
 				Cross.Cracks.Color = Configuration.CrucifixCracks[1]
 				Cross.Cracks.Material = Configuration.CrucifixCracks[2]
 			end
@@ -1203,7 +1204,6 @@ local toolFuncs = {
     
 			ModuleScripts.MainGame.camShaker:ShakeOnce(35, 25, 0.15, 0.15)
 			fakeCross.CFrame = CFrame.lookAt(CrucifixTool.Handle.Position, entityRoot.Position)
-			Cross.Cracks.CFrame=fakeCross.CFrame
 			fakeCross.Anchored = true
 			Configuration.Uses -= 1
 			if Configuration.Uses == 0 then
