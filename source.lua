@@ -1097,7 +1097,7 @@ local toolFuncs = {
 				"The devil's nightmare"
 			};
 			CrucifixTool = {
-				"rbxassetid://11822489989"
+				"rbxassetid://11822556646"
 			}; -- The tool of the crucifix
 			CrucifixChains = {"rbxassetid://11584227521"}; -- The model of the chains
 			CrucifixCracks = {
