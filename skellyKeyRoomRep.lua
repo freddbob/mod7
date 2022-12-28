@@ -39,9 +39,9 @@ local function openDoor(doorTable)
     -- Door opening visual
 
     if doorTable.Model:FindFirstChild("Light") then
-        doorTable.Model.Light.Light.Color = Color3.fromRGB(197, 113, 88)
-        doorTable.Model.Light.Light.Attachment.PointLight.Enabled = true
-        doorTable.Model.Light.Light.Hit:Play()
+        doorTable.Model.Light.Color = Color3.fromRGB(197, 113, 88)
+        doorTable.Model.Light.Attachment.PointLight.Enabled = true
+        doorTable.Model.Light.Hit:Play()
     end
     
     doorTable.Model.Door.CanCollide = false
