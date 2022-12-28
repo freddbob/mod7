@@ -1203,7 +1203,7 @@ local toolFuncs = {
 			local fakeCross = Cross.Handle
     
 			ModuleScripts.MainGame.camShaker:ShakeOnce(35, 25, 0.15, 0.15)
-			fakeCross.CFrame = CFrame.lookAt(CrucifixTool.Handle.Position, entityRoot.Position)
+			Cross:PivotTo(CFrame.lookAt(CrucifixTool.Handle.Position, entityRoot.Position))
 			fakeCross.Anchored = true
 			Configuration.Uses -= 1
 			if Configuration.Uses == 0 then
