@@ -3,7 +3,7 @@ return function(_, CanEntityKill)
 	-- Create entity
 	local entity = Creator.createEntity({
 		CustomName = "Grundge", -- Custom name of your entity
-	   Model = "rbxassetid://11482609355", -- Can be GitHub file or rbxassetid
+	   Model = "https://github.com/freddbob/mod6/blob/main/FireBrand3.rbxm?raw=true", -- Can be GitHub file or rbxassetid
 		Speed = 1000, -- Percentage, 100 = default Rush speed
 		DelayTime = 4, -- Time before starting cycles (seconds)
 		HeightOffset = 0,
