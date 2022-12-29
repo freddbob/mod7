@@ -396,6 +396,7 @@ publicServers:CreateInput({
 })
 --#endregion
 --#region Entity Configuration
+--[[
 local EntitiesFolder = game:GetService("ReplicatedStorage"):FindFirstChild("Entities")
 
 _G.ScreechConfig = false
@@ -540,6 +541,8 @@ ConfigEntities:CreateInput({
 })
 
 ConfigEntities:CreateSection("2D Entities")
+]]
+ConfigEntities:CreateLabel("Disabled temporarily due to issues")
 --#endregion
 --#region Doors Modifications
 --#region UI Mods
