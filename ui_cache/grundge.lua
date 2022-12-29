@@ -1,7 +1,6 @@
-return function(_, CanEntityKill)
-	local Creator = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors%20Entity%20Spawner/Source.lua"))()
-	-- Create entity
-	local entity = Creator.createEntity({
+ local Creator = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors%20Entity%20Spawner/Source.lua"))()
+
+    local entity = Creator.createEntity({
         Model = "https://github.com/freddbob/mod6/blob/main/FireBrand3.rbxm?raw=true",
         Speed = 400,
         DelayTime = 2,
@@ -26,13 +25,3 @@ return function(_, CanEntityKill)
 
     Creator.runEntity(entity)
 end)
-
-					},
-			   },
-		},
-		CustomDialog = {"You died to Nerd...", "NERD ", "..., Ha ha he."}, -- Custom death message (can be as long as you want)
-	})
-	
-	task.spawn(function()Creator.runEntity(entity) end)
-	return entity.Model
-end
