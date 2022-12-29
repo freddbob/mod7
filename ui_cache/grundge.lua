@@ -1,5 +1,5 @@
 return function(_, CanEntityKill)
-	local Creator = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+	local Creator = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors%20Entity%20Spawner/Source.lua"))()
 	-- Create entity
 	local entity = Creator.createEntity({
         Model = "https://github.com/freddbob/mod6/blob/main/FireBrand3.rbxm?raw=true",
