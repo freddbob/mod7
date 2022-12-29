@@ -1,6 +1,4 @@
- local Creator = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors%20Entity%20Spawner/Source.lua"))()
-
-    local entity = Creator.createEntity({
+ local entity = Creator.createEntity({
         Model = "https://github.com/freddbob/mod6/blob/main/FireBrand3.rbxm?raw=true",
         Speed = 400,
         DelayTime = 2,
